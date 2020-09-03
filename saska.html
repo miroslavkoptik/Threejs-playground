@@ -96,6 +96,11 @@
 
 			function render() {
 				requestAnimationFrame(render);
+				
+				if (scene.rotation.x > 90) {
+					scene.rotation.x = 0;
+				}
+				
 				scene.rotation.x += 0.01;
 				//scene.rotation.y += 0.01;
 				//scene.rotation.z += 0.01;

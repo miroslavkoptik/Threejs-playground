@@ -1,0 +1,108 @@
+<html>
+	<head>		
+		<style>
+			body { margin: 0; }
+			canvas { width: 100%; height: 100% }
+		</style>
+	</head>
+	<body>
+		<script src="https://threejs.org/build/three.js"></script>
+		<script>
+			var scene = new THREE.Scene();
+			var camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 500 );
+			var renderer = new THREE.WebGLRenderer();									
+			
+			camera.position.set( 20, 0, 100 );			
+			renderer.setSize( window.innerWidth, window.innerHeight );
+			document.body.appendChild( renderer.domElement );
+
+			var calculateX = function (degree, offset) { return Math.sin((degree + 270) * Math.PI / 180.0) * 4 + 4 + offset; }
+			var calculateY = function (degree, offset) { return Math.cos((degree + 270) * Math.PI / 180.0) * 4 + + offset; }
+
+			var drawS = function (offsetX, charColor) {
+				var geometry = new THREE.Geometry();	
+
+				geometry.vertices.push(new THREE.Vector3( calculateX(0, offsetX), calculateY(0, -5), 0) );				
+				geometry.vertices.push(new THREE.Vector3( calculateX(30, offsetX), calculateY(-30, -5), 0) );				
+				geometry.vertices.push(new THREE.Vector3( calculateX(60, offsetX), calculateY(-60, -5), 0) );				
+				geometry.vertices.push(new THREE.Vector3( calculateX(90, offsetX), calculateY(-90, -5), 0) );	
+				geometry.vertices.push(new THREE.Vector3( calculateX(120, offsetX), calculateY(-120, -5), 0) );				
+				geometry.vertices.push(new THREE.Vector3( calculateX(150, offsetX), calculateY(-150, -5), 0) );				
+				geometry.vertices.push(new THREE.Vector3( calculateX(180, offsetX), calculateY(-180, -5), 0) );
+
+				geometry.vertices.push(new THREE.Vector3( offsetX, 0, 0) );	
+
+				geometry.vertices.push(new THREE.Vector3( calculateX(0, offsetX), calculateY(0, 0), 0) );				
+				geometry.vertices.push(new THREE.Vector3( calculateX(30, offsetX), calculateY(30, 0), 0) );				
+				geometry.vertices.push(new THREE.Vector3( calculateX(60, offsetX), calculateY(60, 0), 0) );				
+				geometry.vertices.push(new THREE.Vector3( calculateX(90, offsetX), calculateY(90, 0), 0) );	
+				geometry.vertices.push(new THREE.Vector3( calculateX(120, offsetX), calculateY(120, 0), 0) );				
+				geometry.vertices.push(new THREE.Vector3( calculateX(150, offsetX), calculateY(150, 0), 0) );				
+				geometry.vertices.push(new THREE.Vector3( calculateX(180, offsetX), calculateY(180, 0), 0) );	
+			
+				scene.add( new THREE.Line( geometry, new THREE.LineBasicMaterial( { color: charColor } ) ));	
+			}
+
+			var drawA = function (offsetX, charColor) {
+				geometry = new THREE.Geometry();
+	
+				geometry.vertices.push(new THREE.Vector3( offsetX, -9, 0) );	
+				geometry.vertices.push(new THREE.Vector3( offsetX + 4, 4, 0) );	
+				geometry.vertices.push(new THREE.Vector3( offsetX + 8, -9, 0) );	
+	
+				scene.add( new THREE.Line( geometry, new THREE.LineBasicMaterial( { color: charColor } ) ));	
+
+				geometry = new THREE.Geometry();
+	
+				geometry.vertices.push(new THREE.Vector3( offsetX + 2, -3, 0) );	
+				geometry.vertices.push(new THREE.Vector3( offsetX + 6, -3, 0) );				
+
+				scene.add( new THREE.Line( geometry, new THREE.LineBasicMaterial( { color: charColor } ) ));	
+			}
+
+			//S
+			drawS(0, 0x00ff00);			
+
+			//A
+			drawA(10, 0xffff00);
+
+			//S
+			drawS(20, 0x0000ff);
+
+			//K
+			geometry = new THREE.Geometry();
+	
+			geometry.vertices.push(new THREE.Vector3( 30, -9, 0) );	
+			geometry.vertices.push(new THREE.Vector3( 30, 4, 0) );	
+
+			scene.add( new THREE.Line( geometry, new THREE.LineBasicMaterial( { color: 0xff0000 } ) ));	
+
+			geometry = new THREE.Geometry();
+	
+			geometry.vertices.push(new THREE.Vector3( 30, -3, 0) );	
+			geometry.vertices.push(new THREE.Vector3( 35, 4, 0) );				
+
+			scene.add( new THREE.Line( geometry, new THREE.LineBasicMaterial( { color: 0xff0000 } ) ));	
+
+			geometry = new THREE.Geometry();
+	
+			geometry.vertices.push(new THREE.Vector3( 30, -3, 0) );	
+			geometry.vertices.push(new THREE.Vector3( 35, -9, 0) );				
+
+			scene.add( new THREE.Line( geometry, new THREE.LineBasicMaterial( { color: 0xff0000 } ) ));	
+
+			//A
+			drawA(37, 0xffffff);
+
+			function render() {
+				requestAnimationFrame(render);
+				scene.rotation.x += 0.01;
+				scene.rotation.y += 0.01;
+				scene.rotation.z += 0.01;
+				renderer.render(scene, camera);
+			};
+			
+			render();
+		</script>
+	</body>
+</html>

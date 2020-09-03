@@ -1,0 +1,106 @@
+<html>
+	<head>
+		<title>My first three.js app</title>
+		<style>
+			body { margin: 0; }
+			canvas { width: 100%; height: 100% }
+		</style>
+	</head>
+	<body>
+		<script src="https://threejs.org/build/three.js"></script>
+		<script>
+			var scene = new THREE.Scene();
+			var camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 500 );
+
+			var renderer = new THREE.WebGLRenderer();
+			renderer.setSize( window.innerWidth, window.innerHeight );
+			document.body.appendChild( renderer.domElement );
+			
+			camera.position.set( 20, 0, 100 );
+			var material = new THREE.LineBasicMaterial( { color: 0x0000ff } );
+			var materialRed = new THREE.LineBasicMaterial( { color: 0xff0000 } );
+			var materialGreen = new THREE.LineBasicMaterial( { color: 0x00ff00 } );
+
+			var calculateX = function (time, radius, degree) {
+				return Math.sin(degree * time * Math.PI / 180.0) * radius;
+			}
+
+			var calculateY = function (time, radius, degree) {
+				return Math.cos(degree * time * Math.PI / 180.0) * radius;
+			}
+
+			for (i=0;i<60;i++) {
+				var geometry1 = new THREE.Geometry();
+				geometry1.vertices.push(new THREE.Vector3( calculateX(i, 11, 6), calculateY(i, 11, 6), 0) );				
+
+				if (i === 0 || i === 15 || i === 30 || i === 45) {
+					geometry1.vertices.push(new THREE.Vector3( calculateX(i, 13, 6), calculateY(i, 13, 6), 0) );				
+					var line1 = new THREE.Line( geometry1, materialGreen );
+					scene.add( line1 );
+				}
+				else {
+					geometry1.vertices.push(new THREE.Vector3( calculateX(i, 12, 6), calculateY(i, 12, 6), 0) );				
+					var line1 = new THREE.Line( geometry1, materialRed );
+					scene.add( line1 );	
+				}
+				
+			}
+
+			var firstTime = 1;
+
+			var animate = function () {
+				requestAnimationFrame( animate );
+
+				if (firstTime === 1) {
+					firstTime  = 0;
+				}
+				else {
+					scene.remove(scene.children[scene.children.length - 1]);
+					scene.remove(scene.children[scene.children.length - 1]);
+					scene.remove(scene.children[scene.children.length - 1]);
+				}
+
+				var currentTime = new Date();	
+				var hour = currentTime.getHours();
+				var minute = currentTime.getMinutes();
+				var second = currentTime.getSeconds();
+
+				var geometry = new THREE.Geometry();
+				geometry.vertices.push(new THREE.Vector3( 0, 0, 0) );	
+				geometry.vertices.push(new THREE.Vector3( calculateX(second, 10, 6), calculateY(second, 10, 6), 0) );				
+				var line = new THREE.Line( geometry, material );
+				scene.add( line );
+
+				geometry = new THREE.Geometry();
+				geometry.vertices.push(new THREE.Vector3( 0, 0, 0) );	
+				geometry.vertices.push(new THREE.Vector3( calculateX(minute, 9, 6), calculateY(minute, 9, 6), 0) );				
+				line = new THREE.Line( geometry, materialRed );
+				scene.add( line );	
+
+				geometry = new THREE.Geometry();
+				geometry.vertices.push(new THREE.Vector3( 0, 0, 0) );	
+				geometry.vertices.push(new THREE.Vector3( calculateX(hour, 6, 30), calculateY(hour, 6, 30), 0) );				
+				line = new THREE.Line( geometry, materialGreen );
+				scene.add( line );				
+				
+					
+
+				//camera.position.x += 0.1;
+				//camera.position.y += 0.1;
+				//camera.position.z += 0.1;
+
+				//line.rotation.x += 0.01;
+				//line.rotation.y += 0.01;
+
+				//line2.rotation.x += 0.01;
+				//line2.rotation.y += 0.01;
+
+				renderer.render( scene, camera );
+			};
+
+			animate();
+
+			//renderer.render( scene, camera );
+		</script>
+	</body>
+</html>

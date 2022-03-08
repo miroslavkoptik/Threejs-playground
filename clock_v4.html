@@ -14,11 +14,11 @@
 			
 			var camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 500 );
 			
-			var controls = new THREE.OrbitControls( camera );
-			controls.autoRotate = true;			
-
 			var renderer = new THREE.WebGLRenderer();
 			renderer.setSize( window.innerWidth, window.innerHeight );
+			
+			var controls = new OrbitControls( camera, renderer.domElement );
+			controls.autoRotate = true;			
 			controls.addEventListener( 'change', renderer );
 			document.body.appendChild( renderer.domElement );
 			

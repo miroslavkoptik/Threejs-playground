@@ -7,8 +7,7 @@
 		</style>
 	</head>
 	<body>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r122/three.js"></script>
-		<script src="https://threejs.org/examples/jsm/controls/OrbitControls.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r122/three.js"></script>		
 		<script>
 			// Example of working orbit controls: https://jsfiddle.net/hyok6tvj/
 			var scene = new THREE.Scene();
@@ -18,9 +17,10 @@
 			var renderer = new THREE.WebGLRenderer();
 			renderer.setSize( window.innerWidth, window.innerHeight );
 			
-			var controls = new OrbitControls( camera, renderer.domElement );
-			controls.autoRotate = true;			
-			controls.addEventListener( 'change', renderer );
+			// https://threejs.org/examples/jsm/controls/OrbitControls.js - not working for some reason
+			//var controls = new OrbitControls( camera, renderer.domElement );
+			//controls.autoRotate = true;			
+			//controls.addEventListener( 'change', renderer );
 			document.body.appendChild( renderer.domElement );
 			
 			camera.position.set( 20, 0, 100 );
